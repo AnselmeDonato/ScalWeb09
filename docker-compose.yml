@@ -4,13 +4,25 @@ volumes:
   astro_node_modules: 
 
 services:
+  todo-ui: 
+    build: todo-ui
+    image: todo-ui
+    restart: "no"
+    volumes: 
+      - ./todo-ui/:/app
+      - astro_node_modules:/app/node_modules
+    expose: 
+      - 3000
+    depends_on: 
+      - todo-api
+
   todo-api:
     build: todo-api
     image: todo-api
     restart: "no"
     volumes:
-      - ./app/:/app
-      - ./app-cache/:/app-cache
+      - ./todo-api/:/app
+      - ./todo-api-cache/:/app-cache
     expose:
       - 7777
     depends_on:
