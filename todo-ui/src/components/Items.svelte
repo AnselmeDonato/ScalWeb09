@@ -23,6 +23,12 @@
 
 		todosPromise = getTodos();
 	};
+
+	const delTodo = async (id) => {
+		const response = await fetch(`/api/todos/${id}`, {method: "DELETE"});
+
+		todosPromise = getTodos();
+	}
   </script>
   
   <h1>Items</h1>
@@ -33,14 +39,17 @@
   <button on:click={addTodo}>Add todo</button>
   
   {#await todosPromise}
-	<p>Loading items</p>
+  <p>Loading items</p>
   {:then todos}
-	{#if todos.length == 0}
+  {#if todos.length == 0}
 	  <p>No items available</p>
-	{:else}
+	  {:else}
 	  <ul>
-		{#each todos as todo}
-		  <li>{todo.item}</li>
+		  {#each todos as todo}
+		  <li>
+			  {todo.item}
+			  <button on:click={() => delTodo(todo.id)}>Delete todo</button>
+		</li>
 		{/each}
 	  </ul>
 	{/if}
