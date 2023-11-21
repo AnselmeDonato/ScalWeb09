@@ -30,7 +30,7 @@ const delTodo = async (_request, mappingResult) => {
   const todos = await sql`SELECT * FROM todos WHERE id = ${ id }`;
 
   if (todos.length == 0) {
-	  return new Response("Id to delete not found", { status: 404 });
+	return new Response("Bad request", { status: 400 });
   }
 
   await sql`DELETE FROM todos WHERE id = ${ id }`
